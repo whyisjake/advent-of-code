@@ -29,4 +29,4 @@ depths.map((depth, index) => {
 });
 
 
-console.log(increased, decreased, increased + decreased, rolling);
+console.log({increased, rolling});
