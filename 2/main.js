@@ -1,6 +1,8 @@
 const { route } = require("./route.js");
 const _ = require("lodash");
 
+// First Question
+
 function getCoordinates(ref) {
   let direction = _.mapValues(route, ref);
   let slimmed = _.omitBy(direction, _.isNil);
@@ -15,6 +17,8 @@ const depth = down - up;
 const answer = forward * depth;
 
 console.log({up, down, forward, depth, answer});
+
+// Second Questions
 
 let aim = 0;
 let aimDepth = 0;
