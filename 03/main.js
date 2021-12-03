@@ -1,3 +1,4 @@
+const { forInRight } = require("lodash");
 const _ = require("lodash");
 let data = require("fs").readFileSync("./input.csv", "utf8");
 
@@ -55,5 +56,35 @@ function epsilonRate(data) {
 let gammaRateDec = parseInt(gammaRate(data), 2);
 let epsilonRateDec = parseInt(epsilonRate(data), 2);
 let powerConsumption = gammaRateDec * epsilonRateDec;
+
+
+// Part 2
+
+let gammaArr = gammaRate(data).split("");
+let trimmedArr = data;
+
+for (let index = 0; index < gammaArr.length; index++) {
+  const element = gammaArr[index];
+  console.log("===" + element + "===");
+
+  console.log("trimmed length", trimmedArr.length);
+
+  _.forEachRight(trimmedArr, function(value, trimmedIndex){
+    // console.log(value[index], element);
+    if( value[index] == element ) {
+      // console.log(value[index], element, trimmedIndex);
+      data.splice(trimmedIndex, 1);
+    }
+
+    gammaArr = gammaRate(trimmedArr)
+  })
+
+
+  // trimmedArr = _.filter(data, function(row){
+  //   return row.split("")[index] !== element;
+  // })
+}
+
+console.log({trimmedArr});
 
 console.log({gammaRateDec, epsilonRateDec, powerConsumption});
