@@ -1,4 +1,3 @@
-const { forInRight } = require("lodash");
 const _ = require("lodash");
 let data = require("fs").readFileSync("./input.csv", "utf8");
 
