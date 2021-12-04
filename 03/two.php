@@ -31,7 +31,7 @@ function get_most_popular_digit($collection)
 	return ($length / 2) > $sum ? 1 : 0;
 }
 
-function get_least_most_popular_digit($collection)
+function get_least_popular_digit($collection)
 {
 	$length = $collection['length'];
 	$array  = $collection['items'];
@@ -60,7 +60,7 @@ function loop_through_variants($array, $better_array, $a, $length, $popular)
 	if ('most' === $popular) {
 		$digit = get_most_popular_digit($collection);
 	} else {
-		$digit = get_least_most_popular_digit($collection);
+		$digit = get_least_popular_digit($collection);
 	}
 
 	// print( 'Popular Digit ' . $digit . "\n" );
