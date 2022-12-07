@@ -7,35 +7,34 @@ const shapes = {
   C: "Scissors",
   X: "Rock",
   Y: "Paper",
-  Z: "Scissors"
-}
+  Z: "Scissors",
+};
 
 const outcomes = {
   0: "Lose",
   3: "Draw",
-  6: "Win"
-}
+  6: "Win",
+};
 
 const gameOutcomes = {
   A: {
-    X:3,
-    Y:6,
-    Z:0
+    X: 3,
+    Y: 6,
+    Z: 0,
   },
   B: {
-    X:0,
-    Y:3,
-    Z:6
+    X: 0,
+    Y: 3,
+    Z: 6,
   },
   C: {
-    X:6,
-    Y:0,
-    Z:3
-  }
-}
+    X: 6,
+    Y: 0,
+    Z: 3,
+  },
+};
 
-let   player1Score = 0,
-      player2Score = 0;
+let player2Score = 0;
 
 /**
  * Score a single round of the game.
@@ -53,13 +52,11 @@ let   player1Score = 0,
 function determineScore(player1Shape, player2Shape) {
   player2Score += shapeToNumber(player2Shape);
   player2Score += determineWinner(player1Shape, player2Shape);
-  console.table(
-    {
-      "Player 1:": shapes[player1Shape],
-      "Player 2:": shapes[player2Shape],
-      "Outcome": outcomes[determineWinner(player1Shape, player2Shape)]
-    }
-  )
+  console.table({
+    "Player 1:": shapes[player1Shape],
+    "Player 2:": shapes[player2Shape],
+    Outcome: outcomes[determineWinner(player1Shape, player2Shape)],
+  });
   return player2Score;
 }
 
