@@ -16,6 +16,12 @@ const outcomes = {
   6: "Win",
 };
 
+const finalOutcomes = {
+  X: "Lose",
+  Y: "Draw",
+  Z: "Win",
+};
+
 const gameOutcomes = {
   A: {
     X: 3,
@@ -34,7 +40,35 @@ const gameOutcomes = {
   },
 };
 
+const newMatrix = {
+  A: {
+    // Rock
+    X: "Paper", // Lose the round
+    Y: "Rock", // Draw the round
+    Z: "Scissors", // Win the round
+  },
+  B: {
+    // Paper
+    X: "Scissors", // Lose the round
+    Y: "Paper", // Draw the round
+    Z: "Rock", // Win the round
+  },
+  C: {
+    // Scissors
+    X: "Rock", // Lose the round
+    Y: "Scissors", // Draw the round
+    Z: "Paper", // Win the round
+  },
+};
+
+const nameToShape = {
+  Rock: "X",
+  Paper: "Y",
+  Scissors: "Z",
+}
+
 let player2Score = 0;
+let player2Final = 0;
 
 /**
  * Score a single round of the game.
@@ -49,15 +83,15 @@ let player2Score = 0;
  * @param {string} player2Shape The shape selected by player 2.
  * @returns {number} The score for the round.
  */
-function determineScore(player1Shape, player2Shape) {
-  player2Score += shapeToNumber(player2Shape);
-  player2Score += determineWinner(player1Shape, player2Shape);
-  console.table({
-    "Player 1:": shapes[player1Shape],
-    "Player 2:": shapes[player2Shape],
-    Outcome: outcomes[determineWinner(player1Shape, player2Shape)],
-  });
-  return player2Score;
+function determineScore(player1Shape, player2Shape, final = false) {
+  let finalScore = 0;
+  if (final) {
+    finalScore = player2Final += shapeToNumber(nameToShape[newMatrix[player1Shape][player2Shape]]) + determineWinner(player1Shape, nameToShape[newMatrix[player1Shape][player2Shape]]);
+  } else {
+    finalScore = player2Score += shapeToNumber(player2Shape) + determineWinner(player1Shape, player2Shape, final);
+
+  }
+  return finalScore;
 }
 
 /**
@@ -66,7 +100,7 @@ function determineScore(player1Shape, player2Shape) {
  * @param {string} player2Shape The shape selected by player 2.
  * @returns {number} 0 for a loss, 3 for a draw, and 6 for a win.
  */
-function determineWinner(player1Shape, player2Shape) {
+function determineWinner(player1Shape, player2Shape, final = false) {
   return gameOutcomes[player1Shape][player2Shape];
 }
 
@@ -105,12 +139,16 @@ fs.readFile("input.txt", "utf8", (err, data) => {
   });
 
   // New array to hold the scores.
-  scores = [];
+  let scores = [];
+  let finalScores = [];
 
-  // For each array in the newArray, determine the score.
+  // Loop through the array and determine the score for each round.
   newArray.forEach((element) => {
     scores.push(determineScore(element[0], element[1]));
+    finalScores.push(determineScore(element[0], element[1], true));
   });
 
-  return console.log("Strategy Guide Score " + scores[scores.length - 1]);
+  console.log("Initial Score " + scores[scores.length - 1]);
+  console.log("Final Score " + finalScores[scores.length - 1]);
+  console.log(player2Final);
 });
